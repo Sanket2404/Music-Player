@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" 
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    
+    <div class="main_div">
+        <div class="music_container">
+            <h2 id="title">Saami Saami</h2>
+            <h3 id="artist">Mounika Yadav</h3>
+            <div class="img_container">
+            <img src="image/Saami-Saami-1.jpg" alt="">    
+            </div>
+            <audio src="music/Saami-Saami-1.mp3"></audio>
+
+           <!--controls-->
+            <div class="music_control">
+                <i class="fas fa-backward" id="prev" title="previ"></i>
+                <i class="fas fa-play main_but" id="play" title="play"></i>
+                <i class="fas fa-forward" id="next" title="next"></i>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    
+        const music=document.querySelector("audio");
+        const img=document.querySelector("img")
+        const play=document.getElementById("play");
+        const artist=document.getElementById("artist");
+        const title=document.getElementById("title");
+        const prev=document.getElementById("prev");
+        const next=document.getElementById("next");
+         
+        const songs=[
+        {
+            name: "Saami-Saami-1",
+            title: "Saami Saami",
+            artist: "mounika yadav",
+        },
+        {
+            name: "Srivalli",
+            title: "Srivalli",
+            artist: "Javed Ali",
+        },
+        {
+            name: "Soch Liya",
+            title: "Soch Liya",
+            artist: "Mithoon",
+        },
+        {
+            name: "O Aasman Wale",
+            title: "O Aasman Wale",
+            artist: "Rochak kohli",
+        },
+        {
+            name: "Chaka Chak",
+            title: "Chaka Chak",
+            artist: "Shreya Ghoshal",
+        },
+        {
+            name: "Oo Antava..",
+            title: "Oo Antava..",
+            artist: "Indravati Chauhan",
+        },
+    ];
+        
+        
+        let isPlaying=false;
+        
+        // for play function
+        
+        const playMusic=()=>{
+            music.play();
+            isPlaying=true;
+            play.classList.replace("fa-play", "fa-pause");
+            img.classList.add("animation");
+        };
+
+        // for pause function
+       
+        const pauseMusic=()=>{
+            music.pause();
+            isPlaying=false;
+            play.classList.replace( "fa-pause" ,"fa-play");
+            img.classList.remove("animation");
+        };
+        
+        play.addEventListener('click',()=>{
+        //  ternery operator
+         isPlaying ? pauseMusic() : playMusic();
+        });
+          
+        //changing the music
+
+        const loadSong =(songs)=>{
+            title.textContent=songs.title;
+            artist.textContent=songs.artist;
+            music.src ="music/" + songs.name +".mp3";
+            img.src="image/" + songs.name +".jpg";
+        };
+        
+        let songIndex=0;
+        // loadSong(songs[1]);
+       
+        const nextSong=()=>{
+              songIndex=(songIndex+1)% songs.length;
+              loadSong(songs[songIndex]);
+              playMusic();
+        }
+
+        const prevSong=()=>{
+              songIndex=(songIndex-1 +songs.length)%songs.length;
+              loadSong(songs[songIndex]);
+              playMusic();
+        }
+
+        next.addEventListener("click",nextSong);
+        prev.addEventListener("click",prevSong);
+    </script>
+</body>
+</html>
